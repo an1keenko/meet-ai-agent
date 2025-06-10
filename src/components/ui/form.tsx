@@ -69,6 +69,13 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
+/**
+ * Provides a unique context for a form item and renders a container div for form field elements.
+ *
+ * Wraps its children in a context that supplies a unique ID, enabling accessible labeling and description for form controls.
+ *
+ * @param className - Additional CSS classes to apply to the container.
+ */
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = React.useId();
 
@@ -79,6 +86,11 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a label for a form field, linking it to the associated input and applying error styling if validation fails.
+ *
+ * The label is connected to the form control via the `htmlFor` attribute using the field's unique ID, and visually indicates an error state when present.
+ */
 function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
   const { error, formItemId } = useFormField();
 
@@ -93,6 +105,11 @@ function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPri
   );
 }
 
+/**
+ * Renders a form control component with accessibility attributes linked to form state.
+ *
+ * Sets ARIA attributes and IDs to associate the control with its description and error message for improved accessibility.
+ */
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
 
@@ -107,6 +124,11 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   );
 }
 
+/**
+ * Renders a paragraph element for form field descriptions, linked to the form control for accessibility.
+ *
+ * Applies appropriate styling and associates the element with the form field using a unique ID.
+ */
 function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   const { formDescriptionId } = useFormField();
 
@@ -120,6 +142,14 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+/**
+ * Displays a form field's error message or custom content, linked for accessibility.
+ *
+ * If a validation error exists for the field, its message is shown; otherwise, renders the provided children. Returns null if there is no error and no children.
+ *
+ * @remark
+ * The rendered element uses the appropriate ARIA attributes and IDs for accessibility, and applies error styling when an error is present.
+ */
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message ?? "") : props.children;

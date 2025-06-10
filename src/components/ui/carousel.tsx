@@ -30,6 +30,13 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
+/**
+ * Provides access to the carousel context within a Carousel component.
+ *
+ * @returns The current carousel context, including state and control functions.
+ *
+ * @throws {Error} If called outside of a {@link Carousel} component.
+ */
 function useCarousel() {
   const context = React.useContext(CarouselContext);
 
@@ -40,6 +47,18 @@ function useCarousel() {
   return context;
 }
 
+/**
+ * Provides a context-enabled carousel component with keyboard navigation and scroll controls.
+ *
+ * Renders a carousel container that manages scroll state, orientation, and accessibility features, and supplies carousel control functions and state to its descendants via context.
+ *
+ * @param orientation - The scroll orientation of the carousel, either "horizontal" or "vertical". Defaults to "horizontal".
+ * @param opts - Additional carousel options.
+ * @param setApi - Optional callback to receive the carousel API instance.
+ * @param plugins - Optional array of carousel plugins.
+ * @param className - Additional CSS class names for the carousel container.
+ * @param children - Carousel content elements.
+ */
 function Carousel({
   orientation = "horizontal",
   opts,
@@ -129,6 +148,11 @@ function Carousel({
   );
 }
 
+/**
+ * Renders the main content area of the carousel, providing the scrollable container for carousel items.
+ *
+ * Applies layout and overflow styles based on the carousel's orientation.
+ */
 function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
 
@@ -139,6 +163,12 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a single slide within the carousel, applying layout styles based on orientation.
+ *
+ * @remark
+ * The slide is given appropriate accessibility roles and adapts its spacing for horizontal or vertical carousels.
+ */
 function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   const { orientation } = useCarousel();
 
@@ -153,6 +183,11 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a button that scrolls the carousel to the previous slide.
+ *
+ * The button is positioned based on the carousel's orientation and is disabled when scrolling to the previous slide is not possible.
+ */
 function CarouselPrevious({
   className,
   variant = "outline",
@@ -183,6 +218,11 @@ function CarouselPrevious({
   );
 }
 
+/**
+ * Renders a button that advances the carousel to the next slide.
+ *
+ * The button is positioned according to the carousel's orientation and is disabled when scrolling forward is not possible.
+ */
 function CarouselNext({
   className,
   variant = "outline",
