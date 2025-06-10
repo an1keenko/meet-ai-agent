@@ -6,22 +6,47 @@ import { XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Root component for the Sheet UI, providing context and state management for all nested sheet elements.
+ *
+ * Forwards all props to the underlying Radix UI primitive and adds a `data-slot="sheet"` attribute for styling or testing.
+ */
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
 
+/**
+ * Renders an element that triggers the opening of the sheet when interacted with.
+ *
+ * Forwards all props to the underlying trigger primitive and adds a `data-slot="sheet-trigger"` attribute.
+ */
 function SheetTrigger({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
 }
 
+/**
+ * Renders a button or element that closes the sheet when activated.
+ *
+ * Forwards all props to the underlying close primitive and adds a `data-slot="sheet-close"` attribute.
+ */
 function SheetClose({ ...props }: React.ComponentProps<typeof SheetPrimitive.Close>) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
 }
 
+/**
+ * Renders the sheet content in a React portal, allowing it to appear outside the DOM hierarchy of its parent.
+ *
+ * Forwards all props to the underlying portal primitive and adds a `data-slot="sheet-portal"` attribute.
+ */
 function SheetPortal({ ...props }: React.ComponentProps<typeof SheetPrimitive.Portal>) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
 }
 
+/**
+ * Renders a semi-transparent overlay behind the sheet, applying animation and positioning styles based on the sheet's state.
+ *
+ * @param className - Additional class names to merge with the default overlay styles.
+ */
 function SheetOverlay({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Overlay>) {
   return (
     <SheetPrimitive.Overlay
@@ -35,6 +60,13 @@ function SheetOverlay({ className, ...props }: React.ComponentProps<typeof Sheet
   );
 }
 
+/**
+ * Renders the main content area of the sheet, sliding in from the specified side.
+ *
+ * @param side - The edge of the viewport from which the sheet appears. Defaults to "right".
+ *
+ * @remark Includes a close button in the top-right corner and overlays the rest of the page with a semi-transparent background.
+ */
 function SheetContent({
   className,
   children,
@@ -72,14 +104,29 @@ function SheetContent({
   );
 }
 
+/**
+ * Renders the header section of a sheet with appropriate layout and spacing.
+ *
+ * @param className - Additional class names to customize the header styling.
+ */
 function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   return <div data-slot="sheet-header" className={cn("flex flex-col gap-1.5 p-4", className)} {...props} />;
 }
 
+/**
+ * Renders the footer section of a sheet with appropriate layout and spacing.
+ *
+ * Applies flex layout, vertical gap, padding, and positions the footer at the bottom of the sheet.
+ */
 function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
   return <div data-slot="sheet-footer" className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />;
 }
 
+/**
+ * Renders the title of the sheet with appropriate styling.
+ *
+ * Applies font and color styles and forwards all additional props to the underlying primitive.
+ */
 function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) {
   return (
     <SheetPrimitive.Title
@@ -90,6 +137,11 @@ function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPr
   );
 }
 
+/**
+ * Renders a styled description for the sheet, typically used to provide additional context below the title.
+ *
+ * Applies muted text styling and forwards all additional props to the underlying primitive.
+ */
 function SheetDescription({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Description>) {
   return (
     <SheetPrimitive.Description
