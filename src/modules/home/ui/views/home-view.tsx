@@ -19,7 +19,7 @@ export const HomeView = () => {
         onClick={() =>
           authClient.signOut({
             fetchOptions: {
-              onSuccess: () => router.push("/sing-in"),
+              onSuccess: () => router.push("/sign-in"),
             },
           })
         }
