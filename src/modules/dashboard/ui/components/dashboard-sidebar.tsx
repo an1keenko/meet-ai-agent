@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { BotIcon, StarIcon, VideoIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -9,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -16,6 +18,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { DashboardUserButton } from "@/modules/dashboard/ui/components/dashboard-user-button";
 
 const firstSection = [
   {
@@ -39,6 +42,8 @@ const secondSection = [
 ];
 
 export const DashboardSidebar = () => {
+  const pathname = usePathname();
+
   return (
     <Sidebar>
       <SidebarHeader className="text-sidebar-accent-foreground">
@@ -57,10 +62,40 @@ export const DashboardSidebar = () => {
               {firstSection.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
+                    asChild
                     className={cn(
-                      "h-10 border border-transparent hover:border-sidebar/20 hover:bg-gradient-to-r from-[var(--sidebar-accent)] via-[color-mix(in oklch, var(--sidebar-accent) 60%, var(--sidebar))] " +
-                        "to-[var(--sidebar)]",
+                      "h-10 border border-transparent hover:border-[rgba(220, 220, 220, 0.3)] hover:bg-gradient-to-r from-[var(--sidebar-accent)] via-[color-mix(in oklch, var(--sidebar-accent) 20%, rgba(200, 200, 200, 0.5))] " +
+                        "to-[rgba(220, 220, 220, 0.3)]",
+                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]/10",
                     )}
+                    isActive={pathname === item.href}
+                  >
+                    <Link href={item.href}>
+                      <item.icon className="size-5" />
+                      <span className="text-sm font-medium tracking-tight">{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <div className="px-4 py-2">
+          <Separator className="opacity-10 text-[#5D6B68]" />
+        </div>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {secondSection.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    className={cn(
+                      "h-10 border border-transparent hover:border-[rgba(220, 220, 220, 0.3)] hover:bg-gradient-to-r from-[var(--sidebar-accent)] via-[color-mix(in oklch, var(--sidebar-accent) 20%, rgba(200, 200, 200, 0.5))] " +
+                        "to-[rgba(220, 220, 220, 0.3)]",
+                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]/10",
+                    )}
+                    isActive={pathname === item.href}
                   >
                     <Link href={item.href}>
                       <item.icon className="size-5" />
@@ -73,6 +108,9 @@ export const DashboardSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="text-white">
+        <DashboardUserButton />
+      </SidebarFooter>
     </Sidebar>
   );
 };
