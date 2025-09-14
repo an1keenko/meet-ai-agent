@@ -59,7 +59,7 @@ The application follows a **3-tier architecture**:
 1. Clone the repository and navigate to the backend folder:
    ```bash
    git clone https://github.com/.git
-   cd Lavishta
+   cd an1keenko
    ```
 2. Install dependencies:
    ```bash
@@ -95,4 +95,4 @@ The application follows a **3-tier architecture**:
 
 ## Contact
 
-- **Email**: mir.saif.ali2004@gmail.com
+- **Email**: ihar.anikeyenka@gmail.com
