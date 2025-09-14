@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
-
 import { useIsMobile } from "@/hooks/use-mobile";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
+
+import React from "react"; // for React.ReactNode
 
 interface ResponsiveDialogProps {
   title: string;

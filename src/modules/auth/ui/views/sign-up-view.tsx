@@ -1,37 +1,37 @@
 "use client";
 
+import { Card, CardContent } from "@/components/ui/card";
 import { z } from "zod";
 import Link from "next/link";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { OctagonAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { OctagonAlertIcon } from "lucide-react";
-import { FaGithub, FaGoogle } from "react-icons/fa";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { authClient } from "@/lib/auth-client";
-
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Alert, AlertTitle } from "@/components/ui/alert";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import Image from "next/image";
 
 const formSchema = z
   .object({
-    name: z.string().min(1, { message: "Name is required" }),
+    name: z.string().min(1, { message: "Name is Required" }),
     email: z.string().email(),
     password: z.string().min(1, { message: "Password is required" }),
     confirmPassword: z.string().min(1, { message: "Password is required" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "Password don't match",
     path: ["confirmPassword"],
   });
-
-export const SignUpView = () => {
+const SignUpView = () => {
   const router = useRouter();
+  const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,18 +46,17 @@ export const SignUpView = () => {
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     setError(null);
     setPending(true);
-
     authClient.signUp.email(
       {
         name: data.name,
         email: data.email,
         password: data.password,
-        callbackURL: "/",
+        callbackURL: "/meetings",
       },
       {
         onSuccess: () => {
           setPending(false);
-          router.push("/");
+          router.push("/meetings");
         },
         onError: ({ error }) => {
           setPending(false);
@@ -70,11 +69,10 @@ export const SignUpView = () => {
   const onSocial = (provider: "github" | "google") => {
     setError(null);
     setPending(true);
-
     authClient.signIn.social(
       {
         provider: provider,
-        callbackURL: "/",
+        callbackURL: "/meetings",
       },
       {
         onSuccess: () => {
@@ -87,7 +85,6 @@ export const SignUpView = () => {
       },
     );
   };
-
   return (
     <div className="flex flex-col gap-6">
       <Card className="overflow-hidden p-0">
@@ -107,7 +104,7 @@ export const SignUpView = () => {
                       <FormItem>
                         <FormLabel>Name</FormLabel>
                         <FormControl>
-                          <Input type="text" placeholder="Igor Anikeenko" {...field} />
+                          <Input type="text" placeholder="john Doe" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -122,7 +119,7 @@ export const SignUpView = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="m@example.com" {...field} />
+                          <Input type="email" placeholder="john@example.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -150,7 +147,7 @@ export const SignUpView = () => {
                     name="confirmPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Confirm password</FormLabel>
+                        <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
                           <Input type="password" placeholder="********" {...field} />
                         </FormControl>
@@ -165,50 +162,56 @@ export const SignUpView = () => {
                     <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
-                <Button type="submit" disabled={pending} className="w-full">
-                  Sign up
+
+                <Button disabled={pending} type="submit" className="w-full cursor-pointer">
+                  Sign Up
                 </Button>
                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                  <span className="bg-card text-muted-foreground relative z-10 px-2">Or continue with</span>
+                  <span className="bg-card text-muted-foreground relative z-10 px-2">or continue with</span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Button
-                    disabled={pending}
                     onClick={() => onSocial("google")}
+                    disabled={pending}
                     variant="outline"
                     type="button"
-                    className="w-full"
+                    className="w-full cursor-pointer"
                   >
-                    <FaGoogle />
+                    <FcGoogle />
+                    Google
                   </Button>
                   <Button
-                    disabled={pending}
                     onClick={() => onSocial("github")}
+                    disabled={pending}
                     variant="outline"
                     type="button"
-                    className="w-full"
+                    className="w-full cursor-pointer"
                   >
                     <FaGithub />
+                    GitHub
                   </Button>
                 </div>
                 <div className="text-center text-sm">
                   Already have an account?{" "}
-                  <Link href="/sign-in" className="underline underline-offset-4">
-                    Sign in
+                  <Link href="/auth/sign-in" className="underline underline-offset-4">
+                    Sign In
                   </Link>
                 </div>
               </div>
             </form>
           </Form>
-          <div className="bg-radial from-sidebar-accent to-sidebar relative md:flex flex-col gap-y-4 items-center justify-center">
-            <img src="/logo.svg" alt="Image" className="h-[92px] w-[92px]" />
+          <div className="bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+            <Image src="/logo.svg" alt="Image" width={92} height={92} />
             <p className="text-2xl font-semibold text-white">Meet.AI</p>
           </div>
         </CardContent>
       </Card>
+
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+        By clicking continue, you agree to our <a href="#">Terms of service</a> and <a href="#">Privacy Policy</a>
       </div>
     </div>
   );
 };
+
+export default SignUpView;

@@ -5,20 +5,6 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 
 import { cn } from "@/lib/utils";
 
-/**
- * A styled slider component supporting single or range selection.
- *
- * Wraps the Radix UI slider primitive to provide enhanced styling and accessibility, supporting both single-value and range sliders based on the provided props.
- *
- * @param className - Additional class names for custom styling.
- * @param defaultValue - The initial value(s) of the slider if uncontrolled.
- * @param value - The controlled value(s) of the slider.
- * @param min - The minimum allowed value. Defaults to 0.
- * @param max - The maximum allowed value. Defaults to 100.
- *
- * @remark
- * If neither {@link value} nor {@link defaultValue} is an array, the slider defaults to a range selection from {@link min} to {@link max}.
- */
 function Slider({
   className,
   defaultValue,

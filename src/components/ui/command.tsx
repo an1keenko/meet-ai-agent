@@ -7,13 +7,9 @@ import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 
-/**
- * Wraps the CommandPrimitive component with custom styling for layout, background, and rounded corners.
- *
- * Accepts all props supported by CommandPrimitive and merges additional class names for consistent appearance.
- */
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
@@ -27,25 +23,18 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
   );
 }
 
-/**
- * Displays a command palette dialog with a customizable title, description, and content.
- *
- * Renders a modal dialog containing a styled command menu, suitable for search or command selection interfaces. The dialog includes an accessible header (visually hidden) and supports custom content and styling.
- *
- * @param title - The dialog's accessible title. Defaults to "Command Palette".
- * @param description - The dialog's accessible description. Defaults to "Search for a command to run...".
- * @param showCloseButton - Whether to display the close button in the dialog. Defaults to true.
- */
 function CommandDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
   children,
+
   className,
   showCloseButton = true,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
   title?: string;
   description?: string;
+  //shouldFilter?: boolean;
   className?: string;
   showCloseButton?: boolean;
 }) {
@@ -68,12 +57,14 @@ function CommandResponsiveDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
   children,
+  shouldFilter = true,
   className,
   showCloseButton = true,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
   title?: string;
   description?: string;
+  shouldFilter?: boolean;
   className?: string;
   showCloseButton?: boolean;
 }) {
@@ -87,14 +78,16 @@ function CommandResponsiveDialog({
             <DrawerTitle>{title}</DrawerTitle>
             <DrawerDescription>{description}</DrawerDescription>
           </DrawerHeader>
-          <Command className="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+          <Command
+            shouldFilter={shouldFilter}
+            className="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
+          >
             {children}
           </Command>
         </DrawerContent>
       </Drawer>
     );
   }
-
   return (
     <Dialog {...props}>
       <DialogHeader className="sr-only">
@@ -102,7 +95,10 @@ function CommandResponsiveDialog({
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
       <DialogContent className={cn("overflow-hidden p-0", className)} showCloseButton={showCloseButton}>
-        <Command className="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+        <Command
+          shouldFilter={shouldFilter}
+          className="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
+        >
           {children}
         </Command>
       </DialogContent>
@@ -110,11 +106,6 @@ function CommandResponsiveDialog({
   );
 }
 
-/**
- * Renders a styled input field for the command menu with a search icon.
- *
- * @param className - Additional class names to apply to the input element.
- */
 function CommandInput({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
     <div data-slot="command-input-wrapper" className="flex h-9 items-center gap-2 border-b px-3">
@@ -131,11 +122,6 @@ function CommandInput({ className, ...props }: React.ComponentProps<typeof Comma
   );
 }
 
-/**
- * Renders a styled scrollable list for command menu items.
- *
- * @param className - Additional class names to customize the list's appearance.
- */
 function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
@@ -146,20 +132,10 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
   );
 }
 
-/**
- * Displays a styled message when no command results are found.
- *
- * Renders the empty state for the command menu with centered text and padding.
- */
 function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
   return <CommandPrimitive.Empty data-slot="command-empty" className="py-6 text-center text-sm" {...props} />;
 }
 
-/**
- * Renders a styled group of command items with a heading for use in a command palette.
- *
- * Applies custom styles to the group container and heading for consistent appearance within the command menu.
- */
 function CommandGroup({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Group>) {
   return (
     <CommandPrimitive.Group
@@ -173,12 +149,6 @@ function CommandGroup({ className, ...props }: React.ComponentProps<typeof Comma
   );
 }
 
-/**
- * Renders a styled separator line for visually dividing sections within a command menu.
- *
- * @remark
- * The separator spans the full width of its container with a subtle border color.
- */
 function CommandSeparator({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Separator>) {
   return (
     <CommandPrimitive.Separator
@@ -189,11 +159,6 @@ function CommandSeparator({ className, ...props }: React.ComponentProps<typeof C
   );
 }
 
-/**
- * Renders a styled command menu item with support for selected and disabled states.
- *
- * Applies custom styles for selection, disabled appearance, and icon alignment within the item.
- */
 function CommandItem({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
@@ -207,9 +172,6 @@ function CommandItem({ className, ...props }: React.ComponentProps<typeof Comman
   );
 }
 
-/**
- * Displays a keyboard shortcut within a command item, styled and aligned to the right.
- */
 function CommandShortcut({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
@@ -222,8 +184,8 @@ function CommandShortcut({ className, ...props }: React.ComponentProps<"span">) 
 
 export {
   Command,
-  CommandDialog,
   CommandResponsiveDialog,
+  CommandDialog,
   CommandInput,
   CommandList,
   CommandEmpty,

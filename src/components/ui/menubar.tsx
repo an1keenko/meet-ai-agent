@@ -6,11 +6,6 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-/**
- * Renders a styled menubar container using Radix UI primitives.
- *
- * Applies consistent layout, background, border, and shadow styles, and accepts additional class names and props for customization.
- */
 function Menubar({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Root>) {
   return (
     <MenubarPrimitive.Root
@@ -21,43 +16,22 @@ function Menubar({ className, ...props }: React.ComponentProps<typeof MenubarPri
   );
 }
 
-/**
- * Provides a styled wrapper for a menubar menu, forwarding all props to the underlying primitive.
- */
 function MenubarMenu({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
   return <MenubarPrimitive.Menu data-slot="menubar-menu" {...props} />;
 }
 
-/**
- * Renders a styled group within the menubar, grouping related menu items together.
- *
- * Forwards all props to the underlying Radix UI menubar group primitive.
- */
 function MenubarGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Group>) {
   return <MenubarPrimitive.Group data-slot="menubar-group" {...props} />;
 }
 
-/**
- * Renders a portal for menubar content, enabling menu elements to be rendered outside the DOM hierarchy of their parent.
- *
- * Forwards all props to the underlying Radix UI Menubar Portal component.
- */
 function MenubarPortal({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Portal>) {
   return <MenubarPrimitive.Portal data-slot="menubar-portal" {...props} />;
 }
 
-/**
- * Renders a styled radio group for use within a menubar, forwarding all props to the underlying primitive.
- */
 function MenubarRadioGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioGroup>) {
   return <MenubarPrimitive.RadioGroup data-slot="menubar-radio-group" {...props} />;
 }
 
-/**
- * Renders a styled menubar trigger button that opens or closes a menu.
- *
- * Applies visual styles for focus and open states, and forwards all additional props to the underlying trigger primitive.
- */
 function MenubarTrigger({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Trigger>) {
   return (
     <MenubarPrimitive.Trigger
@@ -71,15 +45,6 @@ function MenubarTrigger({ className, ...props }: React.ComponentProps<typeof Men
   );
 }
 
-/**
- * Renders the content area of a menubar menu, positioned relative to its trigger.
- *
- * @param align - Controls the horizontal alignment of the content relative to the trigger. Defaults to "start".
- * @param alignOffset - Adjusts the horizontal offset of the content. Defaults to -4.
- * @param sideOffset - Adjusts the vertical or horizontal offset from the trigger. Defaults to 8.
- *
- * @returns The styled menubar content wrapped in a portal for correct layering and positioning.
- */
 function MenubarContent({
   className,
   align = "start",
@@ -104,12 +69,6 @@ function MenubarContent({
   );
 }
 
-/**
- * Renders a styled menubar item with support for destructive variants and optional left inset.
- *
- * @param inset - If true, adds left padding to align with items that have icons or indicators.
- * @param variant - Visual style of the item; "default" or "destructive".
- */
 function MenubarItem({
   className,
   inset,
@@ -133,13 +92,6 @@ function MenubarItem({
   );
 }
 
-/**
- * Renders a styled menubar checkbox item with an indicator icon when checked.
- *
- * Supports disabled state and custom content. The checkbox indicator appears on the left when checked.
- *
- * @param checked - Whether the checkbox item is checked.
- */
 function MenubarCheckboxItem({
   className,
   children,
@@ -166,11 +118,6 @@ function MenubarCheckboxItem({
   );
 }
 
-/**
- * Renders a styled menubar radio item with a circular selection indicator.
- *
- * Used within a menubar radio group to allow selection of a single option. Applies consistent styling and displays a filled circle when selected.
- */
 function MenubarRadioItem({ className, children, ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioItem>) {
   return (
     <MenubarPrimitive.RadioItem
@@ -191,11 +138,6 @@ function MenubarRadioItem({ className, children, ...props }: React.ComponentProp
   );
 }
 
-/**
- * Renders a styled label within a menubar, optionally indented.
- *
- * @param inset - If true, applies additional left padding to visually indent the label.
- */
 function MenubarLabel({
   className,
   inset,
@@ -213,9 +155,6 @@ function MenubarLabel({
   );
 }
 
-/**
- * Renders a horizontal separator line within a menubar, providing visual separation between groups of items.
- */
 function MenubarSeparator({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Separator>) {
   return (
     <MenubarPrimitive.Separator
@@ -226,9 +165,6 @@ function MenubarSeparator({ className, ...props }: React.ComponentProps<typeof M
   );
 }
 
-/**
- * Displays a keyboard shortcut or hint within a menubar item, styled for subtle right alignment.
- */
 function MenubarShortcut({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
@@ -239,18 +175,10 @@ function MenubarShortcut({ className, ...props }: React.ComponentProps<"span">) 
   );
 }
 
-/**
- * Renders a menubar submenu container, forwarding all props to the underlying primitive and adding a data attribute for identification.
- */
 function MenubarSub({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {
   return <MenubarPrimitive.Sub data-slot="menubar-sub" {...props} />;
 }
 
-/**
- * Renders a styled menubar sub-trigger that opens a submenu, displaying a right-pointing chevron icon.
- *
- * @param inset - If true, applies additional left padding for visual alignment.
- */
 function MenubarSubTrigger({
   className,
   inset,
@@ -275,11 +203,6 @@ function MenubarSubTrigger({
   );
 }
 
-/**
- * Renders the submenu content for a menubar, applying styles for animation, positioning, and appearance.
- *
- * Accepts additional class names and props to customize the submenu content.
- */
 function MenubarSubContent({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.SubContent>) {
   return (
     <MenubarPrimitive.SubContent

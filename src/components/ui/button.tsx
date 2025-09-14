@@ -17,6 +17,7 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        custom: "text-white bg-purple-500 border-2 border-red-500",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -32,13 +33,6 @@ const buttonVariants = cva(
   },
 );
 
-/**
- * Renders a customizable button with variant and size options.
- *
- * Supports rendering as a native button or as a child component using the `asChild` prop. Styling is determined by the selected variant and size.
- *
- * @param asChild - If true, renders the button as a child component using {@link Slot}; otherwise, renders a native button element.
- */
 function Button({
   className,
   variant,

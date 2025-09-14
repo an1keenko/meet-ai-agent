@@ -27,11 +27,6 @@ const toggleVariants = cva(
   },
 );
 
-/**
- * Renders a customizable toggle button with variant and size options.
- *
- * Supports styling variants and sizes defined by {@link toggleVariants}, and forwards all additional props to the underlying Radix UI TogglePrimitive.Root component.
- */
 function Toggle({
   className,
   variant,

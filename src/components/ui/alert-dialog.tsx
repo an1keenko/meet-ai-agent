@@ -6,38 +6,18 @@ import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-/**
- * Provides the root component for an alert dialog, managing its open state and accessibility.
- *
- * Wraps {@link AlertDialogPrimitive.Root} and adds a `data-slot="alert-dialog"` attribute for identification.
- */
 function AlertDialog({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
 }
 
-/**
- * Renders a trigger element that opens the alert dialog when activated.
- *
- * Forwards all props to the underlying trigger primitive and adds a `data-slot` attribute for identification.
- */
 function AlertDialogTrigger({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {
   return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />;
 }
 
-/**
- * Renders the portal container for the alert dialog, enabling dialog content to be rendered outside the DOM hierarchy of the parent component.
- *
- * Forwards all props to the underlying portal primitive and adds a `data-slot` attribute for identification.
- */
 function AlertDialogPortal({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) {
   return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
-/**
- * Renders the overlay for the alert dialog, providing a dimmed background and transition animations.
- *
- * @param className - Additional class names to customize the overlay's appearance.
- */
 function AlertDialogOverlay({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) {
   return (
     <AlertDialogPrimitive.Overlay
@@ -51,11 +31,6 @@ function AlertDialogOverlay({ className, ...props }: React.ComponentProps<typeof
   );
 }
 
-/**
- * Renders the alert dialog content with overlay and portal, applying styling and transition effects.
- *
- * Combines the dialog content with an overlay and centers it within a portal. Supports custom class names and passes additional props to the underlying primitive.
- */
 function AlertDialogContent({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Content>) {
   return (
     <AlertDialogPortal>
@@ -72,11 +47,6 @@ function AlertDialogContent({ className, ...props }: React.ComponentProps<typeof
   );
 }
 
-/**
- * Renders the header section of an alert dialog with appropriate layout and styling.
- *
- * @param className - Additional CSS classes to apply to the header.
- */
 function AlertDialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -87,11 +57,6 @@ function AlertDialogHeader({ className, ...props }: React.ComponentProps<"div">)
   );
 }
 
-/**
- * Renders the footer section of an alert dialog with responsive layout for action buttons.
- *
- * @param className - Additional CSS classes to apply to the footer container.
- */
 function AlertDialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -102,11 +67,6 @@ function AlertDialogFooter({ className, ...props }: React.ComponentProps<"div">)
   );
 }
 
-/**
- * Renders the title section of an alert dialog with appropriate styling.
- *
- * @param className - Additional CSS classes to apply to the title.
- */
 function AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
   return (
     <AlertDialogPrimitive.Title
@@ -117,11 +77,6 @@ function AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof A
   );
 }
 
-/**
- * Renders the description text within an alert dialog, styled with muted foreground and small font size.
- *
- * @param className - Additional class names to apply for custom styling.
- */
 function AlertDialogDescription({
   className,
   ...props
@@ -135,20 +90,10 @@ function AlertDialogDescription({
   );
 }
 
-/**
- * Renders an alert dialog action button with standard styling.
- *
- * Combines default button variant styles with any additional classes provided.
- */
 function AlertDialogAction({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Action>) {
   return <AlertDialogPrimitive.Action className={cn(buttonVariants(), className)} {...props} />;
 }
 
-/**
- * Renders a cancel button for the alert dialog, styled with the outlined button variant.
- *
- * Use this component to provide a cancel action within an alert dialog.
- */
 function AlertDialogCancel({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) {
   return <AlertDialogPrimitive.Cancel className={cn(buttonVariants({ variant: "outline" }), className)} {...props} />;
 }
