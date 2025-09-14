@@ -1,11 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { BotIcon, StarIcon, VideoIcon } from "lucide-react";
-
-import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
@@ -18,7 +12,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { DashboardUserButton } from "@/modules/dashboard/ui/components/dashboard-user-button";
+import { cn } from "@/lib/utils";
+import { BotIcon, StarIcon, VideoIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import DashboardUserButton from "./dashboard-user-button";
+import { DashboardTrial } from "./dashboard-trial";
 
 const firstSection = [
   {
@@ -37,23 +37,23 @@ const secondSection = [
   {
     icon: StarIcon,
     label: "Upgrade",
-    href: "/upgrage",
+    href: "/upgrade",
   },
 ];
 
-export const DashboardSidebar = () => {
+const DashboardSideber = () => {
   const pathname = usePathname();
 
   return (
     <Sidebar>
       <SidebarHeader className="text-sidebar-accent-foreground">
         <Link href="/" className="flex items-center gap-2 px-2 pt-2">
-          <Image src="/logo.svg" height={36} width={36} alt="Logo" />
-          <p className="text-2xl font-semibold">Meet AI Agent</p>
+          <Image src="/logo.svg" height={36} width={36} alt="Meet.AI" />
+          <p className="text-2xl font-semibold">Meet.AI</p>
         </Link>
       </SidebarHeader>
       <div className="px-4 py-2">
-        <Separator className="opacity-10 text-[#5D6B68]" />
+        <Separator className="opacity-100 text-[#5D6B68]" />
       </div>
       <SidebarContent>
         <SidebarGroup>
@@ -64,9 +64,8 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "h-10 border border-transparent hover:border-[rgba(220, 220, 220, 0.3)] hover:bg-gradient-to-r from-[var(--sidebar-accent)] via-[color-mix(in oklch, var(--sidebar-accent) 20%, rgba(200, 200, 200, 0.5))] " +
-                        "to-[rgba(220, 220, 220, 0.3)]",
-                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]/10",
+                      "h-10 hover:bg-linear-to-r/oklch border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
+                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]",
                     )}
                     isActive={pathname === item.href}
                   >
@@ -81,8 +80,9 @@ export const DashboardSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
         <div className="px-4 py-2">
-          <Separator className="opacity-10 text-[#5D6B68]" />
+          <Separator className="opacity-100 text-[#5D6B68]" />
         </div>
+
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -91,9 +91,8 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "h-10 border border-transparent hover:border-[rgba(220, 220, 220, 0.3)] hover:bg-gradient-to-r from-[var(--sidebar-accent)] via-[color-mix(in oklch, var(--sidebar-accent) 20%, rgba(200, 200, 200, 0.5))] " +
-                        "to-[rgba(220, 220, 220, 0.3)]",
-                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]/10",
+                      "h-10 hover:bg-linear-to-r/oklch border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
+                      pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]",
                     )}
                     isActive={pathname === item.href}
                   >
@@ -109,8 +108,11 @@ export const DashboardSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="text-white">
+        <DashboardTrial />
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>
   );
 };
+
+export default DashboardSideber;

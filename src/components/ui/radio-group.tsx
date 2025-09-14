@@ -6,20 +6,10 @@ import { CircleIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-/**
- * Renders a styled radio group container using Radix UI primitives.
- *
- * Applies a grid layout with spacing between items and forwards all additional props to the underlying root element.
- */
 function RadioGroup({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
   return <RadioGroupPrimitive.Root data-slot="radio-group" className={cn("grid gap-3", className)} {...props} />;
 }
 
-/**
- * Renders a styled radio button item for use within a radio group.
- *
- * Displays a selectable circular control with visual feedback for selected, focused, disabled, and invalid states. Includes an indicator icon when selected.
- */
 function RadioGroupItem({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
   return (
     <RadioGroupPrimitive.Item

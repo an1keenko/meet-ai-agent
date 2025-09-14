@@ -19,22 +19,10 @@ const alertVariants = cva(
   },
 );
 
-/**
- * Renders a styled alert container with support for visual variants.
- *
- * Combines base alert styles with optional variant-specific styling and any additional class names.
- *
- * @param variant - Determines the visual style of the alert. Supported values are "default" and "destructive".
- */
 function Alert({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
   return <div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...props} />;
 }
 
-/**
- * Displays the title of an alert with styling for prominence and truncation.
- *
- * Intended for use within an {@link Alert} component to highlight the alert's main message.
- */
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -45,11 +33,6 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-/**
- * Displays the descriptive text content within an alert message.
- *
- * Applies muted styling and relaxed spacing for readability. Intended to be used as a child of the {@link Alert} component.
- */
 function AlertDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

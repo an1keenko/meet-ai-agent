@@ -1,13 +1,5 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { ChevronDownIcon, CreditCardIcon, LogOutIcon } from "lucide-react";
-
-import { useIsMobile } from "@/hooks/use-mobile";
 import { authClient } from "@/lib/auth-client";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { GeneratedAvatar } from "@/components/generated-avatar";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import {
   Drawer,
   DrawerContent,
@@ -26,16 +19,23 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-export const DashboardUserButton = () => {
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { GeneratedAvatar } from "@/components/generated-avatar";
+import { ChevronDownIcon, CreditCardIcon, LogOutIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
+
+const DashboardUserButton = () => {
   const router = useRouter();
-  const isMobile = useIsMobile();
   const { data, isPending } = authClient.useSession();
+  const isMobile = useIsMobile();
 
   const onLogout = () => {
     authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/sign-in");
+          router.push("/auth/sign-in");
         },
       },
     });
@@ -48,7 +48,7 @@ export const DashboardUserButton = () => {
   if (isMobile) {
     return (
       <Drawer>
-        <DrawerTrigger className="rounded-lg border border-border/10 p-3 w-full flex items-center gap-2 justify-between bg-white/5 hover:bg-white/10 overflow-hidden">
+        <DrawerTrigger className="rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 gap-x-2 overflow-hidden">
           {data.user.image ? (
             <Avatar>
               <AvatarImage src={data.user.image} />
@@ -68,7 +68,7 @@ export const DashboardUserButton = () => {
             <DrawerDescription>{data.user.email}</DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
-            <Button variant="outline" onClick={() => {}}>
+            <Button variant="outline" onClick={() => authClient.customer.portal()}>
               <CreditCardIcon className="size-4 text-black" />
               Billing
             </Button>
@@ -84,7 +84,7 @@ export const DashboardUserButton = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="rounded-lg border border-border/10 p-3 w-full flex items-center gap-2 justify-between bg-white/5 hover:bg-white/10 overflow-hidden">
+      <DropdownMenuTrigger className="rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 gap-x-2 overflow-hidden">
         {data.user.image ? (
           <Avatar>
             <AvatarImage src={data.user.image} />
@@ -106,13 +106,20 @@ export const DashboardUserButton = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer flex items-center justify-between">
-          Billing <CreditCardIcon className="size-4" />
+        <DropdownMenuItem
+          onClick={() => authClient.customer.portal()}
+          className="cursor-pointer flex items-center justify-between"
+        >
+          Billing
+          <CreditCardIcon />
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onLogout} className="cursor-pointer flex items-center justify-between">
-          Logout <LogOutIcon className="size-4" />
+          Logout
+          <LogOutIcon />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
+
+export default DashboardUserButton;

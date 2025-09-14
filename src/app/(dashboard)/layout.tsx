@@ -1,19 +1,26 @@
-import React from "react";
-
 import { SidebarProvider } from "@/components/ui/sidebar";
-
-import { DashboardSidebar } from "@/modules/dashboard/ui/components/dashboard-sidebar";
-import { DashboardNavbar } from "@/modules/dashboard/ui/components/dashboard-navbar";
+import DashboardNavbar from "@/modules/dashboard/ui/components/dashboard-navbar";
+import DashboardSideber from "@/modules/dashboard/ui/components/dashboard-sidebar";
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 interface Props {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: Props) => {
+const layout = async ({ children }: Props) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/auth/sign-in");
+  }
   return (
     <SidebarProvider>
-      <DashboardSidebar />
-      <main className="flex flex-col h-screen w-screen bg-muted">
+      <DashboardSideber />
+      <main className="flex flex-col w-screen bg-muted">
         <DashboardNavbar />
         {children}
       </main>
@@ -21,4 +28,4 @@ const Layout = ({ children }: Props) => {
   );
 };
 
-export default Layout;
+export default layout;

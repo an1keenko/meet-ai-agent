@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { PanelLeftCloseIcon, PanelLeftIcon, SearchIcon } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
+import { PanelLeftCloseIcon, PanelLeftIcon, SearchIcon } from "lucide-react";
+import DashboardCommand from "./dashboard-command";
+import { useEffect, useState } from "react";
 
-import { DashboardCommand } from "@/modules/dashboard/ui/components/dashboard-command";
-
-export const DashboardNavbar = () => {
+const DashboardNavbar = () => {
   const { state, toggleSidebar, isMobile } = useSidebar();
+
   const [commandOpen, setCommandOpen] = useState(false);
 
   useEffect(() => {
@@ -21,6 +20,7 @@ export const DashboardNavbar = () => {
     };
 
     document.addEventListener("keydown", down);
+
     return () => document.removeEventListener("keydown", down);
   }, []);
 
@@ -51,3 +51,5 @@ export const DashboardNavbar = () => {
     </>
   );
 };
+
+export default DashboardNavbar;
